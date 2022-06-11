@@ -1,4 +1,4 @@
-# Kubernetes Volume Path Checker
+# Kubernetes Volume Validator
 
 Automated Policy check to restrict volume path for deployment manifests.
 
