@@ -1,0 +1,35 @@
+apiVersion: v1
+policies:
+  - name: volumeChecker
+    isDefault: true
+    rules:
+      - identifier: VOLUME_PREFIX_MATCH
+        messageOnFailure: Incorrect volume path
+        
+customRules:
+  - identifier: VOLUME_PREFIX_MATCH
+    name: Ensure correct volume path is given
+    defaultMessageOnFailure: Use appropriate path
+    schema:
+      if:
+        properties:
+          kind:
+            enum:
+              - Deployment	
+      then:
+        properties:
+          spec:
+            properties:
+              template:
+                properties:
+                  spec:
+                    properties:
+                      volumes:
+                         type: array
+                         items:
+                           properties:
+                             glusterfs:
+                               properties:
+                                 path:
+                                   type: string
+                                   pattern: ^/<volume-prefix-for-the-solution>/*$        
